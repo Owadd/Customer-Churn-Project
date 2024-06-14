@@ -7,14 +7,13 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score
 import joblib
 
-def preprocess_and_train(train_file, vectorizer_file, model_file):
+def preprocess_and_train(train_file, model_file):
     """
-    Function to preprocess data, train a SVM model, and save the vectorizer and model separately.
+    Function to preprocess data, train a SVM model, and save the pipeline containing both the preprocessor and the model.
     Print evaluation metrics like accuracy, recall, precision, and F1 score.
 
     Parameters:
     train_file (str): Path to the training set CSV file.
-    vectorizer_file (str): Path to save the vectorizer file using joblib.
     model_file (str): Path to save the trained model file using joblib.
     """
     try:
@@ -71,12 +70,9 @@ def preprocess_and_train(train_file, vectorizer_file, model_file):
         print(f"Precision: {precision:.4f}")
         print(f"F1 Score: {f1:.4f}")
         
-        # Save the preprocessor and model separately
-        joblib.dump(preprocessor, vectorizer_file)
-        print(f"Vectorizer saved to {vectorizer_file}")
-        
+        # Save the entire pipeline
         joblib.dump(pipeline, model_file)
-        print(f"Model saved to {model_file}")
+        print(f"Model and preprocessor pipeline saved to {model_file}")
 
     except FileNotFoundError:
         print(f"Error: The file {train_file} was not found.")
@@ -91,8 +87,7 @@ def preprocess_and_train(train_file, vectorizer_file, model_file):
 
 # Define file paths
 train_file = 'customer_churn_train.csv'  # Replace with your actual training file path
-vectorizer_file = 'vectorizer.pkl'
-model_file = 'svm_model.pkl'
+model_file = 'pipeline_model.pkl'
 
 # Preprocess data and train the model
-preprocess_and_train(train_file, vectorizer_file, model_file)
+preprocess_and_train(train_file, model_file)
