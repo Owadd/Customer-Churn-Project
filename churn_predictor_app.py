@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 
-@st.cache_data(allow_output_mutation=True)
+@st.cache_resource
 def load_model():
     return joblib.load('pipeline_model.pkl')
 
